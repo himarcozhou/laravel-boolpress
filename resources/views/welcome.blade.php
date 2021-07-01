@@ -65,10 +65,14 @@
     </head>
     <body>
         <div class="flex-center position-ref full-height">
+        {{-- 
+        se c'e' Auth::routes(); hai il login con format standard di Laravel
+        
+        --}}
             @if (Route::has('login'))
                 <div class="top-right links">
                     @auth
-                        <a href="{{ url('/home') }}">Home</a>
+                        <a href="{{ url('/admin') }}">Home</a>
                     @else
                         <a href="{{ route('login') }}">Login</a>
 
