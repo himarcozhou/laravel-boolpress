@@ -25,12 +25,20 @@ Auth::routes();
 
 //Route::get('/home', 'HomeController@index')->name('home');
 
-Route::prefix('admin')//tutte le Route::get('') iniziano con 'admin/'
-    ->namespace('Admin')//nome cartella dentro app\Http\controller
-    ->middleware('auth')//controlla se siamo loggati/autenticati o meno
-    ->group(function(){
+Route::prefix('admin') //tutte le Route::get('') iniziano con 'admin/'
+    ->namespace('Admin') //nome cartella dentro app\Http\controller
+    ->middleware('auth') //controlla se siamo loggati/autenticati o meno
+    ->group(function () {
         Route::get('/', 'HomeController@index')->name('home');
 
         //Route::get('/posts', 'PostController@index');
         Route::resource('/posts', 'PostController');
+
+        Route::get('/posts', 'PostController@index')->name('posts.index');
+        Route::post("/posts", "PostController@store")->name("posts.store");
+        Route::get('/posts/create', 'PostController@create')->name('posts.create');
+        Route::get('/posts/{post}', 'PostController@show')->name('posts.show');
+        Route::match(["PUT", "PATCH"], '/posts/{post}', 'PostController@update')->name('posts.update');
+        Route::delete('/posts/{post}', 'PostController@destroy')->name('posts.destroy');
+        Route::get('/posts/{post}/edit', 'PostController@edit')->name('posts.edit');
     });

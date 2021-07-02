@@ -13,8 +13,11 @@
                             {{ session('status') }}
                         </div>
                     @endif
-
+                    <div class='text-center'>
                     {{ __('You are logged as ' . Auth::user()->name . ' [administrator].') }}
+                    <br>
+                    {{ __('You have been granted access to the admin settings.') }}
+                    </div>
                 </div>
             </div>
         </div>

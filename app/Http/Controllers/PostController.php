@@ -32,7 +32,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        return view('posts.create');
     }
 
     /**
@@ -43,7 +43,17 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $newPostData = $request->all();
+
+        $request->validate([
+            'title'=> 'required|max:255',
+            'price'=> 'required|numeric|gte:0',
+        ]);
+        $newPost = new Post();
+        $newPost->fill($newPostData);
+        $newPost -> save();
+
+        return redirect()->route('posts.show', $newPost -> id);
     }
 
     /**
@@ -52,9 +62,15 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Post $post)
     {
-        //
+        if(is_null($post)){
+            abort(404);
+        }
+
+        return view("posts.show", [
+            "post" => $post
+        ]);
     }
 
     /**
@@ -63,9 +79,15 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Post $post)
     {
-        //
+        if(is_null($post)){
+            abort(404);
+        }
+
+        return view ("posts.edit",[
+            "post" => $post
+        ]);
     }
 
     /**
@@ -77,7 +99,12 @@ class PostController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $post = Post::findOrFail($id); // se non trova fa un abort(404)
+        $formData = $request->all();
+
+        $post -> update($formData);
+
+        return redirect()->route('posts.show', $post->id);
     }
 
     /**
@@ -88,6 +115,9 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $post = Post::findOrFail($id); // se non trova fa un abort(404)
+        $post -> delete();
+
+        return redirect()->route('posts.index');
     }
 }
