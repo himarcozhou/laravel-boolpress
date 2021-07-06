@@ -11,7 +11,7 @@
         
         <!-- Styles -->
         <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-        
+
     </head>
     <body>
         <div class="flex-center position-ref full-height">

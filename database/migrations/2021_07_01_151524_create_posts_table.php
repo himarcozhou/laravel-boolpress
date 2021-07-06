@@ -15,6 +15,11 @@ class CreatePostsTable extends Migration
     {
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
+            $table->string('title', 255);
+            $table->longText('description')->nullable()->comment('Commento: Nullable.');
+            $table->string('thumb', 255)->nullable()->comment('Commento: Nullable.');
+            $table->string('link', 255)->nullable()->comment('Commento: Nullable.');
+            $table->text('tag', 255);
             $table->timestamps();
         });
     }

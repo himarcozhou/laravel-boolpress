@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Post;
+use Illuminate\Support\Str;
+
 
 class PostController extends Controller
 {
@@ -43,14 +45,14 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        $newPostData = $request->all();
-
+        //controllo
         $request->validate([
             'title'=> 'required|max:255',
-            'price'=> 'required|numeric|gte:0',
         ]);
+        $newPostData = $request->all();
         $newPost = new Post();
         $newPost->fill($newPostData);
+        
         $newPost -> save();
 
         return redirect()->route('posts.show', $newPost -> id);
@@ -62,8 +64,9 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Post $post)
+    public function show($slug)
     {
+        $post = Post::where('slug', $slug)->first();
         if(is_null($post)){
             abort(404);
         }

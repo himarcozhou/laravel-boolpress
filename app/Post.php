@@ -10,14 +10,13 @@ use Illuminate\Database\Eloquent\Model;
 class Post extends Model {
     use Notifiable;
 
+    //use \Conner\Tagging\Taggable;
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
-    protected $fillable = [
-        'email', 'password', 'name',
-    ];
+    protected $fillable = ['title', 'description', 'thumb', 'link', 'tag'];
 
     /**
      * The attributes that should be hidden for arrays.
