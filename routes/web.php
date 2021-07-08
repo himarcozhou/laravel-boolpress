@@ -32,7 +32,7 @@ Route::prefix('admin')
         
         //Route::get('/posts', "PostController@index");
         //Genera tutte le rotte necessarie per la crud dei posts
-        //Route::get("/posts/filter", "PostController@filter")->name("posts.filter");
+        Route::get("/posts/filter", "PostController@filter")->name("posts.filter");
         Route::resource("/posts", "PostController");
         Route::resource("/users", "UserController");
         

@@ -15,7 +15,13 @@
             <h5 class="card-title">{{ $post->title }}</h5>
             <p class="card-text">{{ substr($post->content, 0, 80) }}</p>
             <p class="card-text"><small class="text-muted">{{ $post->updated_at }}</small></p>
-
+            <dd>
+                    @if(count($post->tags) > 0)
+                        @foreach($post->tags as $tag)
+                            <span class="badge badge-primary">{{ $tag->name }}</span>
+                        @endforeach
+                    @endif
+                    </dd>
             <a href="{{ route('posts.show', ['slug' => $post->slug ]) }}">Apri...</a>
 
           </div>

@@ -13,12 +13,20 @@
                 <dl>
                     <dt>Titolo</dt>
                     <dd>{{ $post->title }}</dd>
+                    
                     <dt>Slug</dt>
                     <dd>{{ $post->slug }}</dd>
                     <dt>Contenuto</dt>
                     <dd>{{ $post->content }}</dd>
                     <dt>Categoria</dt>
                     <dd>{{ $post->category ? $post->category->name : '-' }}</dd>
+                    <dd>
+                    @if(count($post->tags) > 0)
+                        @foreach($post->tags as $tag)
+                            <span class="badge badge-primary">{{ $tag->name }}</span>
+                        @endforeach
+                    @endif
+                    </dd>
                     <dt>Utente</dt>
                     <dd>{{ $post->user->name }} ({{ $post->user->email }})</dd>
 

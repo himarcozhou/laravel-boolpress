@@ -19,11 +19,19 @@ class PostController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request) {
-        $data = [
-            'posts' => Post::orderBy("created_at", "DESC")
-                ->where("user_id", $request->user()->id)
-                ->get()
-        ];
+        $incomingData = session("posts");
+
+        if (isset($incomingData)) {
+            $data = [
+                "posts" => $incomingData
+            ];
+        } else {
+            $data = [
+                'posts' => Post::orderBy("created_at", "DESC")
+                    ->where("user_id", $request->user()->id)
+                    ->get()
+            ];
+        }
 
         return view("admin.posts.index", $data);
     }
@@ -175,5 +183,18 @@ class PostController extends Controller {
 
         $post->delete();
         return redirect()->route('admin.posts.index');
+    }
+
+    public function filter(Request $request) {
+        $filters = $request->all();
+
+        /*  $posts = Post::with(["tags" => function ($query) use ($filters) {
+            $query->where("id", 2);
+        }])->get(); */
+
+        $posts = Post::join("post_tag", "posts.id", "=", "post_tag.post_id")
+            ->where("post_tag.tag_id", $filters["tag"])->get();
+
+        return redirect()->route("admin.posts.index")->with(["posts" => $posts]);
     }
 }
