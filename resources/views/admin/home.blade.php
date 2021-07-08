@@ -31,6 +31,16 @@
                             Categorie: {{ $statistics["categories"] }}
                         </li>
                     </ul>
+
+                    <ul>
+                        {{-- <li>Name: {{ $user->name }}</li>
+                        <li>Email: {{ Auth::user()->email }}</li>
+                        <li>Address: {{ Auth::user()->detail->address }}</li>
+                        <li>Città: {{ Auth::user()->detail->city }}</li>
+                        <li>Provincia: {{ Auth::user()->detail->province }}</li>
+                        <li>CAP: {{ Auth::user()->detail->zip }}</li> --}}
+                        <li>Devo staccare, sono diventato lentissimo a comprendere ed imparare.</li>
+                    </ul>
                 </div>
             </div>
         </div>
