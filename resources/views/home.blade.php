@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.public')
 
 @section('content')
 <div class="container">
@@ -14,7 +14,7 @@
                         </div>
                     @endif
 
-                    {{ __('You are logged in as ' . Auth::user()->name) . ' !'}}
+                    {{ __('You are logged in as ' . Auth::user()->name . ' !') }}
                 </div>
             </div>
         </div>

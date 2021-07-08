@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Category;
 use App\Http\Controllers\Controller;
 use App\Post;
+use Facade\FlareClient\Http\Response;
 use Illuminate\Contracts\Session\Session;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -61,14 +62,14 @@ class PostController extends Controller {
         $slug = Str::slug($new_post->title);
         $slug_base = $slug;
 
-        // verifico che lo slug non esista nel database
+        // cerco nel db se esiste gia' questo slug
         $post_presente = Post::where('slug', $slug)->first();
         $contatore = 1;
 
-        // entro nel ciclo while se ho trovato un post con lo stesso $slug
+        // se trovo lo slug gia' esistente nel db, genero gli slug con un contatore alla fine
         while ($post_presente) {
-            // genero un nuovo slug aggiungendo il contatore alla fine
-            $slug = $slug_base . '-' . $contatore;
+            // rename slug aggiungendo il contatore alla fine
+            $slug = $slug_base . ' (' . $contatore . ')';
             $contatore++;
             $post_presente = Post::where('slug', $slug)->first();
         }
@@ -115,11 +116,11 @@ class PostController extends Controller {
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Post $post) {
+    public function update(Request $request, Response $response) {
         $request->validate([
             'title' => 'required|max:255',
             'content' => 'required',
-            'category_id' => "nullable|exists:categories,id"
+            'category_id' => "nullable|exists:categories,id" // controlla il valore del campo, esista nella tabella categories
         ]);
 
         $form_data = $request->all();
@@ -136,7 +137,7 @@ class PostController extends Controller {
             // entro nel ciclo while se ho trovato un post con lo stesso $slug
             while ($post_presente) {
                 // genero un nuovo slug aggiungendo il contatore alla fine
-                $slug = $slug_base . '-' . $contatore;
+                $slug = $slug_base . ' (' . $contatore . ')';
                 $contatore++;
                 $post_presente = Post::where('slug', $slug)->first();
             }
