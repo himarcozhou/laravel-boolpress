@@ -17,3 +17,6 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::get("/posts", "Api\PostController@index"); //non serve il name-> perche' la chiameremo sempre con una chiamata axios
+//Route::middleware("auth:api")->get("/posts", "Api\PostController@index");

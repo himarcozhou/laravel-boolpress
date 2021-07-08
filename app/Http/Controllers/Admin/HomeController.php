@@ -18,7 +18,7 @@ class HomeController extends Controller {
         return view("admin.home", [
             "statistics" => $statistics,
             //"user" => $request->user(),
-            //"userDetails" => $request->user()->detail,
+            "userDetails" => $request->user()->detail,
             "user" => Auth::user()
         ]);
     }

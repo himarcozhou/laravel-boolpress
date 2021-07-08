@@ -30,10 +30,10 @@ Route::prefix('admin')
         Route::get('/categories', 'CategoryController@index')->name('categories.index');
         Route::get('/tags', 'TagController@index')->name('tags.index');
         
-        //Route::get('/posts', "PostController@index");
         //Genera tutte le rotte necessarie per la crud dei posts
-        Route::get("/posts/filter", "PostController@filter")->name("posts.filter");
         Route::resource("/posts", "PostController");
+
+        Route::get("/posts/filter", "PostController@filter")->name("posts.filter");
         Route::resource("/users", "UserController");
         
     });

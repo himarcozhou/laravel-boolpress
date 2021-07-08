@@ -20,7 +20,7 @@ class PostController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request) {
-        $incomingData = session("posts");
+        $incomingData = session("posts");// in session dati leggibili
 
         if (isset($incomingData)) {
             $data = [
@@ -32,6 +32,17 @@ class PostController extends Controller {
                     ->where("user_id", $request->user()->id)
                     ->get()
             ];
+        }
+
+        foreach ($data["posts"] as $post) {
+            $date = $post->created_at; //get data from post
+
+            $carbonDate = Carbon::parse($date)->setTimezone('Europe/Rome');
+            
+            $formattedDate = $carbonDate->format("d/m/y h:i:s");
+                
+
+            $post->formattedCreatedAt = $formattedDate;
         }
 
         return view("admin.posts.index", $data);
@@ -167,6 +178,9 @@ class PostController extends Controller {
         //$post->tags()->detach();
         //$post->tags()->attach($form_data["tags"]);
 
+
+        //$post->tags()->sync([1, 3, 4, 5]);
+
         $post->tags()->sync($form_data["tags"]);
 
         $post->update($form_data);
@@ -180,7 +194,7 @@ class PostController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function destroy(Post $post) {
-        $post->tags()->detach();
+        $post->tags()->detach(); // toglie le associazioni per quando deleti il Post
 
         $post->delete();
         return redirect()->route('admin.posts.index');

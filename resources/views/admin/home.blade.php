@@ -33,13 +33,15 @@
                     </ul>
 
                     <ul>
-                        {{-- <li>Name: {{ $user->name }}</li>
+                        <li>Name: {{ $user->name }}</li>
                         <li>Email: {{ Auth::user()->email }}</li>
-                        <li>Address: {{ Auth::user()->detail->address }}</li>
+
+                        <li>Address: {{ $userDetails->address }}</li>
+                        {{-- "userDetails" => $request->user()->detail,  at HomeController.php --}}
+
                         <li>Città: {{ Auth::user()->detail->city }}</li>
                         <li>Provincia: {{ Auth::user()->detail->province }}</li>
-                        <li>CAP: {{ Auth::user()->detail->zip }}</li> --}}
-                        <li>Devo staccare, sono diventato lentissimo a comprendere ed imparare.</li>
+                        <li>CAP: {{ Auth::user()->detail->zip }}</li>
                     </ul>
                 </div>
             </div>
