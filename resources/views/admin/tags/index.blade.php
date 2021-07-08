@@ -24,9 +24,9 @@
             <td>{{ $tag->name }}</td>
             <td>{{ $tag->slug }}</td>
             <td class="text-center">
-              <a href="{{ route('admin.posts.filter', ["tag"=>$tag->id]) }}">
+              {{-- <a href="{{ route('admin.posts.filter', ["tag"=>$tag->id]) }}">
                 {{ count($tag->posts) }}
-              </a>
+              </a> --}}
             </td>
             <td></td>
           </tr>

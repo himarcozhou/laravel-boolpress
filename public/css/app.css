@@ -10942,3 +10942,12 @@ a.text-dark:focus {
   }
 }
 
+.nav-item.active {
+  background-color: #343a40;
+  color: white;
+}
+
+.nav-item.active a {
+  color: white;
+}
+
