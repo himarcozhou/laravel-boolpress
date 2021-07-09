@@ -100,10 +100,23 @@ class PostController extends Controller {
         }
 
         // quando esco dal while sono sicuro che lo slug non esiste nel db
+
         // assegno lo slug al post
         $new_post->slug = $slug;
 
+        if (key_exists("postCover", $form_data)) {
+            $storageResult = Storage::put("postCovers", $form_data["postCover"]);
+
+            $new_post->cover_url = $storageResult;
+        }
+
         $new_post->save();
+
+        
+        $new_post->tags()->sync($form_data["tags"]);
+
+        //Mail::to("admin@gmail.com")->send(new NewPostEmail($new_post));
+
 
         $new_post->tags()->sync($form_data["tags"]);
         
@@ -184,8 +197,6 @@ class PostController extends Controller {
         //metodo esteso
         //$post->tags()->detach();
         //$post->tags()->attach($form_data["tags"]);
-
-
         //$post->tags()->sync([1, 3, 4, 5]);
         try{
             $post->tags()->sync($form_data["tags"]);
@@ -194,9 +205,16 @@ class PostController extends Controller {
             return;
         }
 
-        Storage::put('postCovers', $form_data['postCover']);
-        
-        
+        if (key_exists("postCover", $form_data)) {
+            if ($post->cover_url) {
+                Storage::delete($post->cover_url);
+            }
+
+            $storageResult = Storage::put("postCovers", $form_data["postCover"]);
+
+            $form_data["cover_url"] = $storageResult; //aggiungi url del file in storage
+        }
+
         $post->update($form_data);
         return redirect()->route('admin.posts.index');
     }

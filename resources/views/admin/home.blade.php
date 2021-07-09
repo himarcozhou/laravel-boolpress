@@ -36,12 +36,14 @@
                         <li>Name: {{ $user->name }}</li>
                         <li>Email: {{ Auth::user()->email }}</li>
 
+                        @if($userDetails)
                         <li>Address: {{ $userDetails->address }}</li>
                         {{-- "userDetails" => $request->user()->detail,  at HomeController.php --}}
-
                         <li>Città: {{ Auth::user()->detail->city }}</li>
                         <li>Provincia: {{ Auth::user()->detail->province }}</li>
                         <li>CAP: {{ Auth::user()->detail->zip }}</li>
+                        @endif
+                        
                     </ul>
                 </div>
             </div>

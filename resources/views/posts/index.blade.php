@@ -8,7 +8,7 @@
     <div class="card mb-3">
       <div class="row g-0">
         <div class="col-md-4">
-          <img src="https://www.linga.org/site/photos/Largnewsimages/image-not-found.png" class="img-fluid rounded-start" alt="..." style="max-height:150px;width: 100%; object-fit: cover">
+          <img src="{{ $post->cover_url ? asset('storage/' . $post->cover_url) : 'https://www.linga.org/site/photos/Largnewsimages/image-not-found.png'}}" class="img-fluid rounded-start" alt="..." style="max-height:150px;width: 100%; object-fit: cover">
         </div>
         <div class="col-md-8">
           <div class="card-body">
