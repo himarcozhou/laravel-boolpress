@@ -25,7 +25,12 @@
                 @endif
             </div>
             <form action="{{ route('admin.posts.store') }}" method="post" enctype="multipart/form-data">
-                @csrf
+                @csrf   
+
+                <div class="form-group">
+                    <label>Immagine di copertina</label>
+                    <input type="file" name="postCover" accept=".jpg,.png" class="form-control-file">
+                </div>
 
                 <div class="form-group">
                     <label>Titolo</label>

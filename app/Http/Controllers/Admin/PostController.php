@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Category;
 use App\Http\Controllers\Controller;
+use App\Mail\NewPostEmail;
 use App\Post;
 use App\Tag;
 use Carbon\Carbon;
@@ -12,6 +13,7 @@ use Facade\FlareClient\Http\Response;
 use Illuminate\Contracts\Session\Session;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use PhpParser\Node\Stmt\TryCatch;
@@ -114,8 +116,6 @@ class PostController extends Controller {
 
         
         $new_post->tags()->sync($form_data["tags"]);
-
-        //Mail::to("admin@gmail.com")->send(new NewPostEmail($new_post));
 
 
         $new_post->tags()->sync($form_data["tags"]);
