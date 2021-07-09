@@ -7,11 +7,14 @@ use App\Http\Controllers\Controller;
 use App\Post;
 use App\Tag;
 use Carbon\Carbon;
+use Exception;
 use Facade\FlareClient\Http\Response;
 use Illuminate\Contracts\Session\Session;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use PhpParser\Node\Stmt\TryCatch;
 
 class PostController extends Controller {
     /**
@@ -55,8 +58,9 @@ class PostController extends Controller {
      */
     public function create() {
         $categories = Category::all();
+        $tags = Tag::all();
 
-        return view('admin.posts.create', ["categories" => $categories]);
+        return view('admin.posts.create', ["categories" => $categories, "tags" => $tags]);
     }
 
     /**
@@ -100,6 +104,9 @@ class PostController extends Controller {
         $new_post->slug = $slug;
 
         $new_post->save();
+
+        $new_post->tags()->sync($form_data["tags"]);
+        
         return redirect()->route('admin.posts.index');
     }
 
@@ -180,9 +187,16 @@ class PostController extends Controller {
 
 
         //$post->tags()->sync([1, 3, 4, 5]);
+        try{
+            $post->tags()->sync($form_data["tags"]);
+        }catch(Exception $e){
+            abort(404);
+            return;
+        }
 
-        $post->tags()->sync($form_data["tags"]);
-
+        Storage::put('postCovers', $form_data['postCover']);
+        
+        
         $post->update($form_data);
         return redirect()->route('admin.posts.index');
     }
