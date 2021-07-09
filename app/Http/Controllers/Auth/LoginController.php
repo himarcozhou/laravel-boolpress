@@ -26,10 +26,10 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected function authenticated(Request $request, $user)
-    {
-        return redirect('/admin');
-    }
+    // protected function authenticated(Request $request, $user)
+    // {
+    //     return redirect('/admin');
+    // }
 
     protected $redirectTo = RouteServiceProvider::HOME;
 
